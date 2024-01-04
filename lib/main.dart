@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_flutter/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,11 +29,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 15, 7, 90)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 36, 31, 83)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LoginPage(),
     );
   }
 }
