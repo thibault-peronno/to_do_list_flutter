@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -52,7 +51,8 @@ class LoginPage extends StatelessWidget {
                 child: ElevatedButton(
                   // ignore: avoid_print
                   onPressed: () {
-                    print("Button pressed");
+                    // Navigue à la route / (home), remplace la Navigation stack
+                    context.go('/');
                   },
                   child: const Text('Se connecter'),
                 ),
