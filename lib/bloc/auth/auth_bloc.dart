@@ -10,8 +10,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthLogin(AuthLoginEvent event, Emitter<AuthState> emit) {
-    //! to do the connection in a service
+    // to do the connection in auth service
   }
 
-  void _onAuthLogout(AuthLogoutEvent event, Emitter<AuthState> emit) {}
+  void _onAuthLogout(AuthLogoutEvent event, Emitter<AuthState> emit) {
+    // to do logout in auth service
+  }
 }
