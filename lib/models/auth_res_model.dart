@@ -11,7 +11,7 @@ class AuthResModel {
     required this.email,
   });
 
-  factory AuthResModel.formJson(Map<String, dynamic> json) => AuthResModel(
+  factory AuthResModel.fromJson(Map<String, dynamic> json) => AuthResModel(
         id: json['id'],
         firstname: json['firstname'],
         lastname: json['lastname'],

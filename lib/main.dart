@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_flutter/bloc/auth/auth_bloc.dart';
 import 'router/task_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_list_flutter/pages/login_page.dart';
 import 'package:to_do_list_flutter/pages/tasks_page.dart';
 
@@ -13,29 +15,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return BlocProvider(
-    //   create: (context) => TasksBloc(),
-    //   child: MaterialApp.router(
-    //       title: 'to do list',
-    //       theme: ThemeData(
-    //         colorScheme: ColorScheme.fromSeed(
-    //             seedColor: const Color.fromARGB(255, 36, 31, 83)),
-    //         useMaterial3: true,
-    //       ),
-    //       // home: const LoginPage(),
-    //       // home: const TasksPage(),
-    //       routerConfig: TaskRouter.router),
-    // );
-    return MaterialApp.router(
-        title: 'to do list',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 36, 31, 83)),
-          useMaterial3: true,
-        ),
-        // home: const LoginPage(),
-        // home: const TasksPage(),
-        routerConfig: TaskRouter.router);
+    return BlocProvider<AuthBloc>(
+      create: (context) => AuthBloc(),
+      child: MaterialApp.router(
+          title: 'to do list',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color.fromARGB(255, 36, 31, 83)),
+            useMaterial3: true,
+          ),
+          // home: const LoginPage(),
+          // home: const TasksPage(),
+          routerConfig: TaskRouter.router),
+    );
+    // return MaterialApp.router(
+    //     title: 'to do list',
+    //     theme: ThemeData(
+    //       colorScheme: ColorScheme.fromSeed(
+    //           seedColor: const Color.fromARGB(255, 36, 31, 83)),
+    //       useMaterial3: true,
+    //     ),
+    //     // home: const LoginPage(),
+    //     // home: const TasksPage(),
+    //     routerConfig: TaskRouter.router);
   }
 }
 

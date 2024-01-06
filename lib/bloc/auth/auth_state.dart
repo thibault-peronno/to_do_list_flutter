@@ -4,12 +4,15 @@ import 'package:equatable/equatable.dart';
 class AuthState extends Equatable {
   final bool isUserConnected;
   final String token;
+  final String email;
+  final String password;
 
-  const AuthState({
-    required this.isUserConnected,
-    required this.token,
-  });
+  const AuthState(
+      {required this.isUserConnected,
+      required this.token,
+      required this.email,
+      required this.password});
 
   @override
-  List<Object> get props => [isUserConnected, token];
+  List<Object> get props => [isUserConnected, token, email, password];
 }
