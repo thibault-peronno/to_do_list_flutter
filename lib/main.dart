@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_flutter/bloc/auth/auth_bloc.dart';
+import 'package:to_do_list_flutter/bloc/user/user_bloc.dart';
 import 'router/task_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_list_flutter/pages/login_page.dart';
@@ -15,8 +16,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(),
+    // return BlocProvider<AuthBloc>(
+    //   create: (context) => AuthBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(),
+        ),
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(),
+        ),
+        // Add more blocs as needed
+      ],
       child: MaterialApp.router(
         title: 'to do list',
         theme: ThemeData(

@@ -14,9 +14,9 @@ class AuthService {
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
-      // print('Status Code: ${response.statusCode}');
-      // print('Headers: ${response.headers}');
-      // print('Body: ${response.body}');
+      print('Status Code: ${response.statusCode}');
+      print('Headers: ${response.headers}');
+      print('Body: ${response.body}');
       // If the server returns a 200 OK response, parse the JSON.
       return AuthResModel.fromJson(jsonDecode(response.body));
     } else {

@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:to_do_list_flutter/bloc/auth/auth_event.dart';
 import 'package:to_do_list_flutter/bloc/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_list_flutter/bloc/user/user_bloc.dart';
+import 'package:to_do_list_flutter/bloc/user/user_event.dart';
 import 'package:to_do_list_flutter/services/auth_service.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -43,10 +45,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         this.state.email,
         this.state.password,
       );
+      print('loginResponse');
       print(loginResponse);
 
       if (loginResponse.token != '') {
-        // Émettez un nouvel état qui indique que l'utilisateur est connecté
+        // Émettez un nouvel état qui indique que l'utilisateur est connecté - emit a new state to tell user connected.
         emit(
           AuthState(
             isUserConnected: true,
@@ -55,7 +58,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             password: '',
           ),
         );
+        BlocProvider.of<UserBloc>(event.context).add(
+          UserConnected(
+            loginResponse.id,
+            loginResponse.firstname,
+            loginResponse.lastname,
+            loginResponse.email,
+          ),
+        );
       }
+      print('AuthState');
       print(AuthState);
     } catch (e) {
       // Gérez les erreurs de connexion ici

@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.read<AuthBloc>().add(AuthLoginEvent());
+                      context.read<AuthBloc>().add(AuthLoginEvent(context));
                     },
                     child: const Text('Se connecter'),
                   ),
