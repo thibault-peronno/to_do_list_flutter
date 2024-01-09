@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:to_do_list_flutter/bloc/auth/auth_event.dart';
 import 'package:to_do_list_flutter/bloc/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,11 +24,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _onAuthPasswordChanged(AuthPasswordChanged event, Emitter<AuthState> emit) {
-    emit(AuthState(
+    emit(
+      AuthState(
         email: this.state.email,
         isUserConnected: this.state.isUserConnected,
         password: event.password,
-        token: this.state.token));
+        token: this.state.token,
+      ),
+    );
   }
 
   void _onAuthLogin(AuthLoginEvent event, Emitter<AuthState> emit) async {
@@ -34,12 +39,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       // Appellez votre service d'authentification pour effectuer la connexion - call the authentification service to set the connection
-      final loginResponse =
-          await AuthService.login(this.state.email, this.state.password);
+      final loginResponse = await AuthService.login(
+        this.state.email,
+        this.state.password,
+      );
+      print(loginResponse);
 
-      // Émettez un nouvel état qui indique que l'utilisateur est connecté
-      emit(const AuthState(
-          isUserConnected: true, token: '', email: '', password: ''));
+      if (loginResponse.token != '') {
+        // Émettez un nouvel état qui indique que l'utilisateur est connecté
+        emit(
+          AuthState(
+            isUserConnected: true,
+            token: loginResponse.token,
+            email: '',
+            password: '',
+          ),
+        );
+      }
+      print(AuthState);
     } catch (e) {
       // Gérez les erreurs de connexion ici
     }

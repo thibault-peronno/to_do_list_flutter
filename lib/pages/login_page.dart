@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/auth/auth_bloc.dart';
 import '../bloc/auth/auth_event.dart';
+import '../bloc/auth/auth_state.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -54,18 +55,24 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 20, // Creates vertical space
               ),
-              SizedBox(
-                width: 250,
-                height: 50,
-                child: ElevatedButton(
-                  // ignore: avoid_print
-                  onPressed: () {
-                    // Navigue à la route / (home), remplace la Navigation stack
+              // with the BlocLister, we check the AuthState and if we have a change in your state, we "play" the conditioin if valid
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state.isUserConnected) {
                     context.go('/');
-                  },
-                  child: const Text('Se connecter'),
+                  }
+                },
+                child: SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(AuthLoginEvent());
+                    },
+                    child: const Text('Se connecter'),
+                  ),
                 ),
-              ),
+              )
             ],
           )),
     ));
