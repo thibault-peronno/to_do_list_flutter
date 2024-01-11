@@ -1,7 +1,7 @@
 class TaskModel {
   int id;
   String description;
-  bool isDone;
+  int isDone;
 
   TaskModel({
     required this.id,

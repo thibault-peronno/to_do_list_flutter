@@ -13,4 +13,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 void _onTasksLoadEvent(TasksLoadEvent event, Emitter<TasksState> emit) async {
   List<TaskModel> tasks =
       await TasksService.getTasks(event.userId, event.token);
+
+  emit(TasksSuccessState(tasks: tasks));
 }

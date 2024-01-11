@@ -17,3 +17,12 @@ class TasksSuccessState extends TasksState {
   @override
   List<Object> get props => [tasks];
 }
+
+class TasksErrorState extends TasksState {
+  final String message;
+
+  const TasksErrorState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

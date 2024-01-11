@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+// ignore_for_file: unnecessary_this
+
 import 'package:to_do_list_flutter/bloc/auth/auth_event.dart';
 import 'package:to_do_list_flutter/bloc/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
