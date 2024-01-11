@@ -11,3 +11,8 @@ class TasksLoadEvent extends TasksEvent {
     required this.token,
   });
 }
+
+class NewTaskEvent extends TasksEvent {
+  final String task;
+  NewTaskEvent(this.task);
+}

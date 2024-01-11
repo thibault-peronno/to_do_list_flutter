@@ -7,6 +7,7 @@ import 'package:to_do_list_flutter/services/tasks_service.dart';
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc() : super(TasksInitialState()) {
     on<TasksLoadEvent>(_onTasksLoadEvent);
+    on<NewTaskEvent>(_onNewTaskEvent);
   }
 }
 
@@ -15,4 +16,10 @@ void _onTasksLoadEvent(TasksLoadEvent event, Emitter<TasksState> emit) async {
       await TasksService.getTasks(event.userId, event.token);
 
   emit(TasksSuccessState(tasks: tasks));
+}
+
+void _onNewTaskEvent(NewTaskEvent event, Emitter<TasksState> emit) {
+  emit(
+    TasksState(newTask: event.task),
+  );
 }

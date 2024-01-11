@@ -41,12 +41,14 @@ class TasksPage extends StatelessWidget {
           ),
           const SizedBox(height: 50),
           const SizedBox(
-            width: 250,
+            width: 300,
             height: 50,
             child: TextField(
-              obscureText: true,
+              obscureText: false,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.add),
+                filled: true,
+                // border: OutlineInputBorder(),
                 labelText: 'Nouvelle tâche',
               ),
             ),
@@ -55,9 +57,9 @@ class TasksPage extends StatelessWidget {
             height: 10,
           ),
           SizedBox(
-            width: 250,
+            width: 300,
             height: 50,
-            child: ElevatedButton(
+            child: FilledButton.tonal(
               onPressed: () {
                 print('ajout d une nouvelle tâche');
               },
