@@ -4,6 +4,7 @@ import 'package:to_do_list_flutter/bloc/auth/auth_bloc.dart';
 import 'package:to_do_list_flutter/bloc/tasks/tasks_state.dart';
 import 'package:to_do_list_flutter/bloc/user/user_bloc.dart';
 import 'package:to_do_list_flutter/bloc/user/user_state.dart';
+import 'package:to_do_list_flutter/components/task_card.dart';
 import '../bloc/tasks/tasks_bloc.dart';
 import '../bloc/tasks/tasks_event.dart';
 
@@ -21,7 +22,6 @@ class TasksPage extends StatelessWidget {
       body: Center(
           child: Column(
         children: [
-          const Text('page des tâches'),
           const SizedBox(height: 10),
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
@@ -39,14 +39,36 @@ class TasksPage extends StatelessWidget {
               }
             },
           ),
-          BlocListener<TasksBloc, TasksState>(
-            listener: (context, state) {
-              if (state.props != []) {
-                const Text('text dans bloc listener task bloc');
+          BlocBuilder<TasksBloc, TasksState>(
+            builder: (context, state) {
+              switch (state) {
+                case TasksInitialState _:
+                  return const Text('Pas de tâche ?');
+                case TasksSuccessState _:
+                  return Column(
+                    children: state.tasks
+                        .map((task) => TaskCard(task: task))
+                        .toList(),
+                  );
+                // return ListView.builder(
+                //   itemCount: state.tasks.length,
+                //   itemBuilder: (context, index) {
+                //     return TaskCard(task: state.tasks[index]);
+                //   },
+                // );
+                default:
+                  return Container();
               }
             },
-            child: const Text('child text'),
-          )
+          ),
+          // BlocListener<TasksBloc, TasksState>(
+          //   listener: (context, state) {
+          //     if (state.props != []) {
+          //       const Text('text dans bloc listener task bloc');
+          //     }
+          //   },
+          //   child: const Text('child text'),
+          // )
         ],
       )),
     );
