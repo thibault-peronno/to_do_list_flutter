@@ -7,12 +7,14 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      title: Text(task.description),
-      value: task.isDone == 1 ? true : false,
-      onChanged: (value) {
-        task.isDone == 1 ? task.isDone = 0 : task.isDone = 1;
-      },
+    return Card(
+      child: CheckboxListTile(
+        title: Text(task.description),
+        value: task.isDone == 1 ? true : false,
+        onChanged: (value) {
+          task.isDone == 1 ? task.isDone = 0 : task.isDone = 1;
+        },
+      ),
     );
   }
 }

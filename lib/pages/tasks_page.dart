@@ -39,28 +39,60 @@ class TasksPage extends StatelessWidget {
               }
             },
           ),
-          BlocBuilder<TasksBloc, TasksState>(
-            builder: (context, state) {
-              switch (state) {
-                case TasksInitialState _:
-                  return const Text('Pas de tâche ?');
-                case TasksSuccessState _:
-                  return Column(
-                    children: state.tasks
-                        .map((task) => TaskCard(task: task))
-                        .toList(),
-                  );
-                // return ListView.builder(
-                //   itemCount: state.tasks.length,
-                //   itemBuilder: (context, index) {
-                //     return TaskCard(task: state.tasks[index]);
-                //   },
-                // );
-                default:
-                  return Container();
-              }
-            },
+          const SizedBox(height: 50),
+          const SizedBox(
+            width: 250,
+            height: 50,
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Nouvelle tâche',
+              ),
+            ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: 250,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                print('ajout d une nouvelle tâche');
+              },
+              child: const Text('Ajouter'),
+            ),
+          ),
+          const SizedBox(height: 15),
+          Expanded(
+            child: BlocBuilder<TasksBloc, TasksState>(
+              builder: (context, state) {
+                switch (state) {
+                  case TasksInitialState _:
+                    return const Text('Pas de tâche ?');
+                  case TasksSuccessState _:
+                    // return Column(
+                    //   children: state.tasks
+                    //       .map((task) => TaskCard(task: task))
+                    //       .toList(),
+                    // );
+                    return Container(
+                      width: 300,
+                      child: ListView.builder(
+                        itemCount: state.tasks.length,
+                        itemBuilder: (context, index) {
+                          return TaskCard(task: state.tasks[index]);
+                        },
+                      ),
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
+          ),
+
           // BlocListener<TasksBloc, TasksState>(
           //   listener: (context, state) {
           //     if (state.props != []) {
