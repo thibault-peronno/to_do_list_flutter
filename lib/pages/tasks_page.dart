@@ -42,7 +42,7 @@ class TasksPage extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             const SizedBox(
-              width: 300,
+              width: 400,
               height: 50,
               child: TextField(
                 obscureText: false,
@@ -58,7 +58,7 @@ class TasksPage extends StatelessWidget {
               height: 10,
             ),
             SizedBox(
-              width: 300,
+              width: 400,
               height: 50,
               child: FilledButton.tonal(
                 onPressed: () {
@@ -81,7 +81,7 @@ class TasksPage extends StatelessWidget {
                       //       .toList(),
                       // );
                       return Container(
-                        width: 300,
+                        width: 400,
                         child: ListView.builder(
                           itemCount: state.tasks.length,
                           itemBuilder: (context, index) {
