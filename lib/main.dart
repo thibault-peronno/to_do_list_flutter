@@ -31,8 +31,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'to do list',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 36, 31, 83)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
         // home: const LoginPage(),
