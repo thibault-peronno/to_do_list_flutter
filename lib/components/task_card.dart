@@ -10,15 +10,17 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // we can not use read directly in the action onchanged or onPressed. Maybe others. So We create a variable before.
+    final taskUpdate = context.read<TasksBloc>();
+    print(taskUpdate);
     return Card(
       child: CheckboxListTile(
         title: Text(task.description),
         value: task.isDone == 1 ? true : false,
         onChanged: (value) {
-          context
-              .read<TasksBloc>()
-              .add(UpdateTaskEvent(task.id, value!, task.description));
-          value == true ? task.isDone = 1 : task.isDone = 0;
+          print(value);
+          taskUpdate.add(UpdateTaskEvent(task.id, value!, task.description));
+          // value == true ? task.isDone = 1 : task.isDone = 0;
         },
       ),
     );

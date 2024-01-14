@@ -20,9 +20,11 @@ class AuthService {
       print('Body: ${response.body}');
       final responseBody = AuthResModel.fromJson(jsonDecode(response.body));
       final token = responseBody.token;
+      final id = responseBody.id;
       try {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
+        await prefs.setInt('userId', id);
       } catch (e) {
         print("Error saving token: $e");
       }

@@ -17,7 +17,7 @@ class NewTaskEvent extends TasksEvent {
 
 class UpdateTaskEvent extends TasksEvent {
   final int id;
-  final String decription;
+  final String description;
   final bool isDone;
-  UpdateTaskEvent(this.id, this.isDone, this.decription);
+  UpdateTaskEvent(this.id, this.isDone, this.description);
 }

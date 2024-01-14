@@ -39,4 +39,29 @@ class TasksService {
       throw Exception('Connexion échouée');
     }
   }
+
+  static Future<String> updateTask(
+      int id, String description, bool isDone) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    print(id);
+    print(description);
+    print(isDone);
+    final http.Response response = await http.put(Uri.parse('$baseUrl/$id'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(
+            {'id': id, 'description': description, 'isDone': isDone}));
+    print(response.statusCode);
+    if (response.statusCode == 204) {
+      print('Ressource mise à jour avec succès');
+      print(response.body);
+      return 'true';
+    } else {
+      print('Erreur lors de la mise à jour de la ressource');
+      throw Exception('Mise à jour échouée');
+    }
+  }
 }
