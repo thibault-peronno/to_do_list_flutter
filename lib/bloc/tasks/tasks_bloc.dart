@@ -10,6 +10,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<TasksLoadEvent>(_onTasksLoadEvent);
     on<NewTaskEvent>(_onNewTaskEvent);
     on<UpdateTaskEvent>(_onUpdateTaskEvent);
+    on<DeleteTaskEvent>(_onDeleteTaskEvent);
   }
 }
 
@@ -33,6 +34,24 @@ void _onUpdateTaskEvent(UpdateTaskEvent event, Emitter<TasksState> emit) async {
         event.id, event.description, event.isDone);
 
     if (updatedTask == 'true') {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final int? id = prefs.getInt('userId');
+      // the ! after id, check that variable is not nullable
+      List<TaskModel> tasks = await TasksService.getTasks(id!);
+      emit(TasksSuccessState(tasks: tasks));
+    }
+  } catch (error) {
+    print('error : $error');
+    // when we do the errors
+    // emit(TasksErrorState(e.toString()));
+  }
+}
+
+void _onDeleteTaskEvent(DeleteTaskEvent event, Emitter<TasksState> emit) async {
+  try {
+    final deleteTask = await TasksService.deleteTask(event.id);
+    if (deleteTask == 'true') {
+      print('true delete');
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final int? id = prefs.getInt('userId');
       // the ! after id, check that variable is not nullable

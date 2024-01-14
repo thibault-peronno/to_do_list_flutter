@@ -21,3 +21,8 @@ class UpdateTaskEvent extends TasksEvent {
   final bool isDone;
   UpdateTaskEvent(this.id, this.isDone, this.description);
 }
+
+class DeleteTaskEvent extends TasksEvent {
+  final int id;
+  DeleteTaskEvent(this.id);
+}

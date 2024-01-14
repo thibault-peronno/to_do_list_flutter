@@ -30,6 +30,9 @@ class TaskCard extends StatelessWidget {
         IconButton(
           onPressed: () {
             print('delete task $task');
+            context.read<TasksBloc>().add(
+                  DeleteTaskEvent(task.id),
+                );
           },
           icon: const Icon(Icons.delete_forever_rounded),
         ),

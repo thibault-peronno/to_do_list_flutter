@@ -64,4 +64,26 @@ class TasksService {
       throw Exception('Mise à jour échouée');
     }
   }
+
+  static Future<String> deleteTask(id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+
+    final http.Response response = await http.delete(
+      Uri.parse('$baseUrl/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('Ressource mise à jour avec succès');
+      print(response.body);
+      return 'true';
+    } else {
+      print('Erreur lors de la mise à jour de la ressource');
+      throw Exception('Mise à jour échouée');
+    }
+  }
 }
