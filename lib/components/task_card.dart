@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_list_flutter/bloc/tasks/tasks_bloc.dart';
+import 'package:to_do_list_flutter/bloc/tasks/tasks_event.dart';
 import 'package:to_do_list_flutter/models/task_model.dart';
 
 class TaskCard extends StatelessWidget {
@@ -12,7 +15,10 @@ class TaskCard extends StatelessWidget {
         title: Text(task.description),
         value: task.isDone == 1 ? true : false,
         onChanged: (value) {
-          task.isDone == 1 ? task.isDone = 0 : task.isDone = 1;
+          context
+              .read<TasksBloc>()
+              .add(UpdateTaskEvent(task.id, value!, task.description));
+          value == true ? task.isDone = 1 : task.isDone = 0;
         },
       ),
     );

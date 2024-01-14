@@ -16,3 +16,10 @@ class NewTaskEvent extends TasksEvent {
   final String task;
   NewTaskEvent(this.task);
 }
+
+class UpdateTaskEvent extends TasksEvent {
+  final int id;
+  final String decription;
+  final bool isDone;
+  UpdateTaskEvent(this.id, this.isDone, this.decription);
+}

@@ -8,6 +8,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc() : super(TasksInitialState()) {
     on<TasksLoadEvent>(_onTasksLoadEvent);
     on<NewTaskEvent>(_onNewTaskEvent);
+    on<UpdateTaskEvent>(_onUpdateTaskEvent);
   }
 }
 
@@ -22,4 +23,10 @@ void _onNewTaskEvent(NewTaskEvent event, Emitter<TasksState> emit) {
   emit(
     TasksState(newTask: event.task),
   );
+}
+
+void _onUpdateTaskEvent(UpdateTaskEvent event, Emitter emit) async {
+  print('update task');
+  final updatedTask =
+      await TasksService.updateTask(event.id, event.decription, event.isDone);
 }
