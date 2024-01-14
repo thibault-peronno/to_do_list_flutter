@@ -6,11 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_list_flutter/bloc/user/user_bloc.dart';
 import 'package:to_do_list_flutter/bloc/user/user_event.dart';
 import 'package:to_do_list_flutter/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc()
-      : super(const AuthState(
-            isUserConnected: false, token: "", email: "", password: "")) {
+      : super(
+            const AuthState(isUserConnected: false, email: "", password: "")) {
     on<AuthLoginEvent>(_onAuthLogin);
     on<AuthLogoutEvent>(_onAuthLogout);
     on<AuthEmailChanged>(_onAuthEmailChanged);
@@ -18,11 +19,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _onAuthEmailChanged(AuthEmailChanged event, Emitter<AuthState> emit) {
-    emit(AuthState(
+    emit(
+      AuthState(
         email: event.email,
         isUserConnected: this.state.isUserConnected,
         password: this.state.password,
-        token: this.state.token));
+        // token: this.state.token,
+      ),
+    );
   }
 
   _onAuthPasswordChanged(AuthPasswordChanged event, Emitter<AuthState> emit) {
@@ -31,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: this.state.email,
         isUserConnected: this.state.isUserConnected,
         password: event.password,
-        token: this.state.token,
+        // token: this.state.token,
       ),
     );
   }
@@ -48,12 +52,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       print('loginResponse');
       print(loginResponse);
 
-      if (loginResponse.token != '') {
+      // I retrieve the token in the shared prefernce storage
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? token = prefs.getString('token');
+
+      if (token != '') {
         // Émettez un nouvel état qui indique que l'utilisateur est connecté - emit a new state to tell user connected.
         emit(
-          AuthState(
+          const AuthState(
             isUserConnected: true,
-            token: loginResponse.token,
+            // token: loginResponse.token,
             email: '',
             password: '',
           ),
