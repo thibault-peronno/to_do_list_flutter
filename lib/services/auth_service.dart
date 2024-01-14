@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:to_do_list_flutter/models/auth_res_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   static String baseUrl = 'http://localhost:3000/api';
@@ -17,8 +18,16 @@ class AuthService {
       print('Status Code: ${response.statusCode}');
       print('Headers: ${response.headers}');
       print('Body: ${response.body}');
+      final responseBody = AuthResModel.fromJson(jsonDecode(response.body));
+      final token = responseBody.token;
+      try {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+      } catch (e) {
+        print("Error saving token: $e");
+      }
       // If the server returns a 200 OK response, parse the JSON.
-      return AuthResModel.fromJson(jsonDecode(response.body));
+      return responseBody;
     } else {
       print('error');
       print('Status Code: ${response.statusCode}');

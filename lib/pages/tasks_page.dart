@@ -28,8 +28,8 @@ class TasksPage extends StatelessWidget {
               builder: (context, state) {
                 switch (state) {
                   case UserState _:
-                    BlocProvider.of<TasksBloc>(context).add(TasksLoadEvent(
-                        userId: state.id, token: authState.token));
+                    BlocProvider.of<TasksBloc>(context)
+                        .add(TasksLoadEvent(userId: state.id));
                     return Center(
                       child: Text(
                         "Bonjour ${state.firstname} ${state.lastname}",

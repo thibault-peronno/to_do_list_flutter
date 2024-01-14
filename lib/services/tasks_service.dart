@@ -2,13 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:to_do_list_flutter/models/task_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TasksService {
   static String baseUrl = 'http://localhost:3000/api/task';
 
-  static Future<List<TaskModel>> getTasks(int userId, String token) async {
+  static Future<List<TaskModel>> getTasks(int userId) async {
     print(userId);
-    print(token);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
     final http.Response response = await http.get(
       Uri.parse('$baseUrl/tasks/$userId'),
       // headers: {
