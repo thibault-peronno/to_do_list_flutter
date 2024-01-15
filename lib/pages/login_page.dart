@@ -10,71 +10,79 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.isUserConnected == true ? context.go('/') : context.go('/login');
+      },
+      child: Scaffold(
         body: Center(
-      child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Connexion utilisateur'),
-              const SizedBox(
-                height: 20, // Creates vertical space
-              ),
-              SizedBox(
-                width: 250,
-                height: 50,
-                child: TextField(
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'E-mail',
+          child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Connexion utilisateur'),
+                  const SizedBox(
+                    height: 20, // Creates vertical space
                   ),
-                  onChanged: (String value) async {
-                    context.read<AuthBloc>().add(AuthEmailChanged(value));
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 10, // Creates vertical space
-              ),
-              SizedBox(
-                width: 250,
-                height: 50,
-                child: TextField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
+                  SizedBox(
+                    width: 250,
+                    height: 50,
+                    child: TextField(
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'E-mail',
+                      ),
+                      onChanged: (String value) async {
+                        context.read<AuthBloc>().add(AuthEmailChanged(value));
+                      },
+                    ),
                   ),
-                  onChanged: (String value) async {
-                    context.read<AuthBloc>().add(AuthPasswordChanged(value));
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 20, // Creates vertical space
-              ),
-              // with the BlocLister, we check the AuthState and if we have a change in your state, we "play" the conditioin if valid
-              BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  if (state.isUserConnected) {
-                    context.go('/');
-                  }
-                },
-                child: SizedBox(
-                  width: 250,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(AuthLoginEvent(context));
+                  const SizedBox(
+                    height: 10, // Creates vertical space
+                  ),
+                  SizedBox(
+                    width: 250,
+                    height: 50,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                      ),
+                      onChanged: (String value) async {
+                        context
+                            .read<AuthBloc>()
+                            .add(AuthPasswordChanged(value));
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20, // Creates vertical space
+                  ),
+                  // with the BlocLister, we check the AuthState and if we have a change in your state, we "play" the conditioin if valid
+                  BlocListener<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state.isUserConnected) {
+                        context.go('/');
+                      }
                     },
-                    child: const Text('Se connecter'),
-                  ),
-                ),
-              )
-            ],
-          )),
-    ));
+                    child: SizedBox(
+                      width: 250,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<AuthBloc>().add(AuthLoginEvent(context));
+                        },
+                        child: const Text('Se connecter'),
+                      ),
+                    ),
+                  )
+                ],
+              )),
+        ),
+      ),
+    );
   }
 }

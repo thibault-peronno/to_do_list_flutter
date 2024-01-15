@@ -27,8 +27,12 @@ class NavigationBarApp extends StatelessWidget {
           IconButton(
             onPressed: () {
               context.read<AuthBloc>().add(AuthLogoutEvent());
+              context.go('/login');
             },
-            icon: const Icon(Icons.logout_rounded),
+            icon: const Icon(
+              Icons.logout_rounded,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

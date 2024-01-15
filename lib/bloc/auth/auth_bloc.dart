@@ -86,7 +86,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await AuthService().logout();
       // Plus nécéssaire, puisque on listen les auth state change
-      emit(const AuthState(isUserConnected: false, email: '', password: ''));
+      emit(
+        const AuthState(isUserConnected: false, email: '', password: ''),
+      );
     } catch (error) {
       print('error log out : $error');
       emit(const AuthState(isUserConnected: false, email: '', password: ''));
