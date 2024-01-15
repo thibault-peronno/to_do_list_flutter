@@ -82,17 +82,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onAuthLogout(AuthLogoutEvent event, Emitter<AuthState> emit) {
-    // to do logout in auth service
-
-//     try {
-//    // Appellez votre service d'authentification pour effectuer la déconnexion
-//    await authService.logout();
-
-//    // Émettez un nouvel état qui indique que l'utilisateur n'est plus connecté
-//    emit(AuthState(isUserConnected: false, token: ""));
-//  } catch (e) {
-//    // Gérez les erreurs de déconnexion ici
-//  }
+  void _onAuthLogout(AuthLogoutEvent event, Emitter<AuthState> emit) async {
+    try {
+      await AuthService().logout();
+      // Plus nécéssaire, puisque on listen les auth state change
+      emit(const AuthState(isUserConnected: false, email: '', password: ''));
+    } catch (error) {
+      print('error log out : $error');
+      emit(const AuthState(isUserConnected: false, email: '', password: ''));
+    }
   }
 }

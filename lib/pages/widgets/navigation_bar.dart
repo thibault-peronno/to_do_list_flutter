@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../bloc/auth/auth_bloc.dart';
+import '../../bloc/auth/auth_event.dart';
 
 class NavigationBarApp extends StatelessWidget {
   const NavigationBarApp({
@@ -20,6 +24,12 @@ class NavigationBarApp extends StatelessWidget {
         children: [
           _buildIconButton(Icons.home, 'Home', '/'),
           _buildIconButton(Icons.account_circle_rounded, 'profil', '/profil'),
+          IconButton(
+            onPressed: () {
+              context.read<AuthBloc>().add(AuthLogoutEvent());
+            },
+            icon: const Icon(Icons.logout_rounded),
+          ),
         ],
       ),
     );

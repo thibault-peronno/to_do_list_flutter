@@ -39,4 +39,6 @@ class AuthService {
       throw Exception('Connexion échouée');
     }
   }
+
+  logout() {}
 }
