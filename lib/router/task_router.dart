@@ -23,7 +23,7 @@ class TaskRouter {
       GoRoute(
         name: 'tasks',
         path: tasks,
-        builder: (_, state) => const TasksPage(),
+        builder: (_, state) => TasksPage(),
         redirect: (context, state) => _redirect(context),
       ),
       GoRoute(

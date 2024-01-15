@@ -3,13 +3,21 @@ import 'package:to_do_list_flutter/models/task_model.dart';
 
 class TasksState extends Equatable {
   final String? newTask;
-  const TasksState({this.newTask});
+  final Object? tasks;
+  const TasksState({this.newTask, this.tasks});
 
   @override
   List<Object?> get props => [newTask];
 }
 
-class TasksInitialState extends TasksState {}
+class TasksInitialState extends TasksState {
+  final String newTask;
+  final Object tasks;
+  const TasksInitialState({required this.newTask, required this.tasks});
+
+  @override
+  List<Object> get props => [newTask, tasks];
+}
 
 class TasksSuccessState extends TasksState {
   final List<TaskModel> tasks;

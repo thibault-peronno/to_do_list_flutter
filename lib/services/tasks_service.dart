@@ -47,13 +47,20 @@ class TasksService {
     print(id);
     print(description);
     print(isDone);
-    final http.Response response = await http.put(Uri.parse('$baseUrl/$id'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
+    final http.Response response = await http.put(
+      Uri.parse('$baseUrl/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(
+        {
+          'id': id,
+          'description': description,
+          'isDone': isDone,
         },
-        body: jsonEncode(
-            {'id': id, 'description': description, 'isDone': isDone}));
+      ),
+    );
     print(response.statusCode);
     if (response.statusCode == 204) {
       print('Ressource mise à jour avec succès');
@@ -84,6 +91,35 @@ class TasksService {
     } else {
       print('Erreur lors de la mise à jour de la ressource');
       throw Exception('Mise à jour échouée');
+    }
+  }
+
+  static Future<String> addTask(task) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    final int? id = prefs.getInt('userId');
+
+    final http.Response response = await http.post(
+      Uri.parse('$baseUrl/'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode({
+        'user_id': id,
+        'description': task,
+        'isDone': false,
+      }),
+    );
+
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+      print('Ressource mise à jour avec succès');
+      print(response.body);
+      return 'true';
+    } else {
+      print('Erreur lors de l ajout de la ressource');
+      throw Exception("L'ajout a echoué");
     }
   }
 }

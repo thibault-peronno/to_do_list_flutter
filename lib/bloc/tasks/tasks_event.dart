@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 abstract class TasksEvent {
   const TasksEvent();
 }
@@ -10,9 +12,9 @@ class TasksLoadEvent extends TasksEvent {
   });
 }
 
-class NewTaskEvent extends TasksEvent {
+class AddNewTasKEvent extends TasksEvent {
   final String task;
-  NewTaskEvent(this.task);
+  AddNewTasKEvent({required this.task});
 }
 
 class UpdateTaskEvent extends TasksEvent {

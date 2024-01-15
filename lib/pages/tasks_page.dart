@@ -10,11 +10,12 @@ import '../bloc/tasks/tasks_bloc.dart';
 import '../bloc/tasks/tasks_event.dart';
 
 class TasksPage extends StatelessWidget {
-  const TasksPage({super.key});
+  TasksPage({super.key});
+  //It is a better practice to use this widget to keep the value of a TextField. I could change the way i did for the login page.
+  final TextEditingController _newTaskController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final authState = BlocProvider.of<AuthBloc>(context).state;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -41,12 +42,13 @@ class TasksPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 50),
-            const SizedBox(
+            SizedBox(
               width: 400,
               height: 50,
               child: TextField(
+                controller: _newTaskController,
                 obscureText: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.add),
                   filled: true,
                   // border: OutlineInputBorder(),
@@ -63,6 +65,11 @@ class TasksPage extends StatelessWidget {
               child: FilledButton.tonal(
                 onPressed: () {
                   print('ajout d une nouvelle tâche');
+                  context.read<TasksBloc>().add(
+                        AddNewTasKEvent(
+                          task: _newTaskController.text,
+                        ),
+                      );
                 },
                 child: const Text('Ajouter'),
               ),
@@ -75,11 +82,6 @@ class TasksPage extends StatelessWidget {
                     case TasksInitialState _:
                       return const Text('Pas de tâche ?');
                     case TasksSuccessState _:
-                      // return Column(
-                      //   children: state.tasks
-                      //       .map((task) => TaskCard(task: task))
-                      //       .toList(),
-                      // );
                       return Container(
                         width: 400,
                         child: ListView.builder(

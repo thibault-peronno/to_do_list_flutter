@@ -6,9 +6,9 @@ import 'package:to_do_list_flutter/services/tasks_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc() : super(TasksInitialState()) {
+  TasksBloc() : super(const TasksInitialState(newTask: "", tasks: {})) {
     on<TasksLoadEvent>(_onTasksLoadEvent);
-    on<NewTaskEvent>(_onNewTaskEvent);
+    on<AddNewTasKEvent>(_onAddNewTasKEvent);
     on<UpdateTaskEvent>(_onUpdateTaskEvent);
     on<DeleteTaskEvent>(_onDeleteTaskEvent);
   }
@@ -20,10 +20,22 @@ void _onTasksLoadEvent(TasksLoadEvent event, Emitter<TasksState> emit) async {
   emit(TasksSuccessState(tasks: tasks));
 }
 
-void _onNewTaskEvent(NewTaskEvent event, Emitter<TasksState> emit) {
-  emit(
-    TasksState(newTask: event.task),
-  );
+void _onAddNewTasKEvent(AddNewTasKEvent event, Emitter<TasksState> emit) async {
+  try {
+    final addNewTask = await TasksService.addTask(event.task);
+
+    if (addNewTask == 'true') {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final int? id = prefs.getInt('userId');
+      // the ! after id, check that variable is not nullable
+      List<TaskModel> tasks = await TasksService.getTasks(id!);
+      emit(TasksSuccessState(tasks: tasks));
+    }
+  } catch (error) {
+    print('error : $error');
+    // when we do the errors
+    // emit(TasksErrorState(e.toString()));
+  }
 }
 
 void _onUpdateTaskEvent(UpdateTaskEvent event, Emitter<TasksState> emit) async {
