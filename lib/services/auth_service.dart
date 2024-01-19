@@ -4,7 +4,9 @@ import 'package:to_do_list_flutter/models/auth_res_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static String baseUrl = 'http://localhost:3000/api';
+  // static String baseUrl = 'http://localhost:3000/api';
+  // when I virtualize the app on my own phone
+  static String baseUrl = 'http://192.168.33.209:3000/api';
 
   static Future<AuthResModel> login(String email, String password) async {
     print('auth service');

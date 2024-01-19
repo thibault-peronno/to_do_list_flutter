@@ -5,7 +5,9 @@ import 'package:to_do_list_flutter/models/task_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TasksService {
-  static String baseUrl = 'http://localhost:3000/api/task';
+  // static String baseUrl = 'http://localhost:3000/api/task';
+  // when I virtualize the app on my own phone
+  static String baseUrl = 'http://192.168.33.209:3000/api/task';
 
   static Future<List<TaskModel>> getTasks(int userId) async {
     print(userId);
